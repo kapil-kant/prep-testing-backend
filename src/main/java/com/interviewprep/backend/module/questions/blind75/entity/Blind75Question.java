@@ -25,6 +25,9 @@ public class Blind75Question {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, unique = true, updatable = false)
+    private String questionKey;
+
     @Column(nullable = false, unique = true)
     private String title;
 
@@ -49,6 +52,9 @@ public class Blind75Question {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private VideoAvailability videoAvailability;
+
+    @Column(nullable = false, columnDefinition = "integer not null default 0")
+    private int seedVersion;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
