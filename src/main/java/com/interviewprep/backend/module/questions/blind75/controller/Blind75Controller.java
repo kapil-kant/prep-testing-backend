@@ -27,6 +27,16 @@ public class Blind75Controller {
 
     private final Blind75Service blind75Service;
 
+    @GetMapping("/solved-count")
+    public ResponseEntity<ApiResponse> getSolvedCount(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Map<String, Integer> counts = blind75Service.getSolvedQuestionCount(userDetails.getId());
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .success(true)
+                .data(counts)
+                .build());
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse> getAllQuestions(@AuthenticationPrincipal CustomUserDetails userDetails) {
         UUID userId = userDetails.getUser().getId();
