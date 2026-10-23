@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface Blind75Service {
 
-    List<Blind75Response> getAllQuestions(UUID userId);
+    List<Integer> getSolvedQuestionCount(UUID userId);\n
 
     List<ProgressStatus> getStatuses();
 
