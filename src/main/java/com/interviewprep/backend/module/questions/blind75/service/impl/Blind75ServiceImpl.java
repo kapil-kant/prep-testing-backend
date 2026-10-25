@@ -75,6 +75,25 @@ public class Blind75ServiceImpl implements Blind75Service {
     public void updateProgress(UUID questionId, UUID userId, ProgressRequest request) {
         try {
             Blind75Question question = blind75Repository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
+    }
+
+    @Override
+    public Map<String, Integer> getSolvedAndTotalCounts(UUID userId) {
+        try {
+            int totalQuestions = blind75Repository.findAll().size();
+
+            int solvedCount = (int) userProgressRepository.findByUserId(userId).stream()
+                    .filter(progress -> progress.getStatus() == ProgressStatus.SOLVED)
+                    .count();
+
+            return Map.of("solved", solvedCount, "total", totalQuestions);
+
+        } catch (Exception ex) {
+            log.error("Failed to fetch solved and total question counts for user {}: {}", userId, ex.getMessage(), ex);
+            throw new QuestionsFetchFailedException(ex);
+        }
+    }
+}
 
             userProgressRepository.findByUserIdAndQuestionId(userId, questionId)
                     .ifPresentOrElse(
