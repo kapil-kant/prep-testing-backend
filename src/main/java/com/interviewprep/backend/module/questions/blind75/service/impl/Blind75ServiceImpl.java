@@ -99,4 +99,16 @@ public class Blind75ServiceImpl implements Blind75Service {
             throw new ProgressUpdateFailedException(ex);
         }
     }
+
+    @Override
+    public Map<String, Integer> getUserSolvedAndTotalCount(UUID userId) {
+        int totalCount = (int) blind75Repository.count();
+        int solvedCount = (int) userProgressRepository.findByUserId(userId).stream()
+                .filter(progress -> progress.getStatus() == ProgressStatus.SOLVED)
+                .count();
+        return Map.of(
+                "solvedCount", solvedCount,
+                "totalCount", totalCount
+        );
+    }
 }

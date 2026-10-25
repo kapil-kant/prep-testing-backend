@@ -16,6 +16,7 @@ public final class Constants {
     public static final int QUESTIONS_FETCHED = 2007;
     public static final int STATUSES_FETCHED = 2008;
     public static final int PROGRESS_UPDATED = 2009;
+    public static final int STATS_FETCHED = 2010;
 
     // Failure codes (4xxx)
     public static final int INVALID_CREDENTIALS = 4000;
