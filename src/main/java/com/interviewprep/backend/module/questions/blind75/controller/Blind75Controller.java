@@ -46,4 +46,15 @@ public class Blind75Controller {
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
     }
+
+    @GetMapping("/progress/count")
+    public ResponseEntity<ApiResponse> getSolvedAndTotalCounts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        UUID userId = userDetails.getUser().getId();
+        var counts = blind75Service.getSolvedAndTotalCounts(userId);
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code("SOLVED_COUNTS_FETCHED")
+                .success(true)
+                .data(counts)
+                .build());
+    }
 }
