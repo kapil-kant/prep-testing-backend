@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import com.interviewprep.backend.module.questions.blind75.dto.response.UserProgressSummaryResponse;
 import java.util.UUID;
 
 @RestController
@@ -38,6 +39,18 @@ public class Blind75Controller {
     public ResponseEntity<ApiResponse> getStatuses() {
         List<ProgressStatus> statuses = blind75Service.getStatuses();
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.STATUSES_FETCHED).success(true).data(statuses).build());
+    }
+
+    @GetMapping("/progress")
+    public ResponseEntity<ApiResponse> getProgress(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null || userDetails.getUser() == null) {
+            return ResponseEntity.status(401).body(ApiResponse.builder().code(401).success(false).build());
+        }
+        UUID userId = userDetails.getUser().getId();
+        UserProgressSummaryResponse progressSummary = blind75Service.getUserProgressSummary(userId);
+        return ResponseEntity.ok(ApiResponse.builder().code(200).success(true).data(progressSummary).build());
+    }
+
     }
 
     @PostMapping("/{id}/progress")
