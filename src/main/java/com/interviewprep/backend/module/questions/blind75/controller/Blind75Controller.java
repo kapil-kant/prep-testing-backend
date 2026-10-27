@@ -25,6 +25,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Blind75Controller {
 
+    // ... existing code ...
+
+    @GetMapping("/progress")
+    public ResponseEntity<ApiResponse> getProgress(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            // Return 401/empty progress to anonymous
+            return ResponseEntity.ok(ApiResponse.builder().code(Constants.QUESTIONS_FETCHED).success(true).data(new java.util.HashMap<>()).build());
+        }
+        var progress = blind75Service.getUserProgress(userDetails.getUser().getId());
+        java.util.Map<String, Long> progressMap = java.util.Map.of("solved", progress.solved, "total", progress.total);
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.QUESTIONS_FETCHED).success(true).data(progressMap).build());
+    }
+
     private final Blind75Service blind75Service;
 
     @GetMapping

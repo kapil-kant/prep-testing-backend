@@ -10,4 +10,6 @@ public interface Blind75Repository extends JpaRepository<Blind75Question, UUID> 
 
     @Query("select coalesce(max(b.seedVersion), -1) from Blind75Question b")
     int findMaxSeedVersion();
+
+    long count();
 }
