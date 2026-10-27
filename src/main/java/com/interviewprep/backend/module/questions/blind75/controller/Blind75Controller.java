@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+import com.interviewprep.backend.common.response.ApiResponse;
+import com.interviewprep.backend.module.questions.blind75.dto.response.UserProgressResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 @RestController
 @RequestMapping("/api/v1/blind75")
 @RequiredArgsConstructor
@@ -38,6 +44,18 @@ public class Blind75Controller {
     public ResponseEntity<ApiResponse> getStatuses() {
         List<ProgressStatus> statuses = blind75Service.getStatuses();
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.STATUSES_FETCHED).success(true).data(statuses).build());
+    }
+
+    @GetMapping("/progress")
+    public ResponseEntity<ApiResponse> getUserProgress(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (userDetails == null) {
+            // No data for unauthenticated users
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.builder().code("UNAUTHORIZED").success(false).build());
+        }
+        UUID userId = userDetails.getUser().getId();
+        UserProgressResponse progress = blind75Service.getUserProgress(userId);
+        return ResponseEntity.ok(ApiResponse.builder().code("USER_PROGRESS_FETCHED").success(true).data(progress).build());
+    }
     }
 
     @PostMapping("/{id}/progress")

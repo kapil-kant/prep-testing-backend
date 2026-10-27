@@ -99,4 +99,16 @@ public class Blind75ServiceImpl implements Blind75Service {
             throw new ProgressUpdateFailedException(ex);
         }
     }
+
+    @Override
+    public UserProgressResponse getUserProgress(UUID userId) {
+        try {
+            int totalQuestions = (int) blind75Repository.count();
+            int solvedCount = userProgressRepository.countByUserIdAndStatus(userId, ProgressStatus.SOLVED);
+            return new UserProgressResponse(solvedCount, totalQuestions);
+        } catch (Exception ex) {
+            log.error("Failed to fetch user progress for user {}: {}", userId, ex.getMessage(), ex);
+            return new UserProgressResponse(0, (int) blind75Repository.count());
+        }
+    }
 }
