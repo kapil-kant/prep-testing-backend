@@ -46,6 +46,7 @@ public final class Constants {
             Map.entry(QUESTIONS_FETCHED, "Questions fetched"),
             Map.entry(STATUSES_FETCHED, "Statuses fetched"),
             Map.entry(PROGRESS_UPDATED, "Progress updated"),
+            Map.entry(PROGRESS_SUMMARY_FETCHED, "Progress summary fetched"),
 
 
             //failure responses

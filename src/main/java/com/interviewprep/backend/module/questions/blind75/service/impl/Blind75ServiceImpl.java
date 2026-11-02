@@ -5,6 +5,7 @@ import com.interviewprep.backend.module.auth.entity.User;
 import com.interviewprep.backend.module.auth.repository.UserRepository;
 import com.interviewprep.backend.module.questions.blind75.dto.request.ProgressRequest;
 import com.interviewprep.backend.module.questions.blind75.dto.response.Blind75Response;
+import com.interviewprep.backend.module.questions.blind75.dto.response.ProgressSummaryResponse;
 import com.interviewprep.backend.module.questions.blind75.entity.Blind75Question;
 import com.interviewprep.backend.module.questions.blind75.entity.UserQuestionProgress;
 import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
@@ -97,6 +98,23 @@ public class Blind75ServiceImpl implements Blind75Service {
         } catch (Exception ex) {
             log.error("Failed to update progress for question {} and user {}: {}", questionId, userId, ex.getMessage(), ex);
             throw new ProgressUpdateFailedException(ex);
+        }
+    }
+
+    @Override
+    public ProgressSummaryResponse getProgressSummary(UUID userId) {
+        try {
+            long total = blind75Repository.count();
+            long solved = userProgressRepository.countByUserIdAndStatus(userId, ProgressStatus.SOLVED);
+            return ProgressSummaryResponse.builder()
+                    .solvedCount(solved)
+                    .totalCount(total)
+                    .build();
+        } catch (AppException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            log.error("Failed to fetch progress summary for user {}: {}", userId, ex.getMessage(), ex);
+            throw new QuestionsFetchFailedException(ex);
         }
     }
 }
