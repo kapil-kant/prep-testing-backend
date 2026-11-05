@@ -1,6 +1,7 @@
 package com.interviewprep.backend.module.questions.blind75.repository;
 
 import com.interviewprep.backend.module.questions.blind75.entity.UserQuestionProgress;
+import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface UserProgressRepository extends JpaRepository<UserQuestionProgre
     Optional<UserQuestionProgress> findByUserIdAndQuestionId(UUID userId, UUID questionId);
 
     List<UserQuestionProgress> findByUserId(UUID userId);
+
+    long countByUserIdAndStatus(UUID userId, ProgressStatus status);
 }
