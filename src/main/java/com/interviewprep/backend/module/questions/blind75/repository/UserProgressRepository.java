@@ -12,4 +12,6 @@ public interface UserProgressRepository extends JpaRepository<UserQuestionProgre
     Optional<UserQuestionProgress> findByUserIdAndQuestionId(UUID userId, UUID questionId);
 
     List<UserQuestionProgress> findByUserId(UUID userId);
+
+    long countByUserIdAndStatus(UUID userId, com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus status);
 }

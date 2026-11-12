@@ -99,4 +99,11 @@ public class Blind75ServiceImpl implements Blind75Service {
             throw new ProgressUpdateFailedException(ex);
         }
     }
+
+    @Override
+    public com.interviewprep.backend.module.questions.blind75.dto.response.ProgressSummaryResponse getUserProgress(UUID userId) {
+        long total = blind75Repository.count();
+        long solved = userProgressRepository.countByUserIdAndStatus(userId, com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus.SOLVED);
+        return new com.interviewprep.backend.module.questions.blind75.dto.response.ProgressSummaryResponse(solved, total);
+    }
 }
