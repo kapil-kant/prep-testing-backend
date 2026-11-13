@@ -99,4 +99,10 @@ public class Blind75ServiceImpl implements Blind75Service {
             throw new ProgressUpdateFailedException(ex);
         }
     }
+
+    @Override
+    public void resetUserProgress(UUID questionId, UUID userId) {
+        Blind75Question question = blind75Repository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
+        userProgressRepository.deleteByUserIdAndQuestionId(userId, questionId);
+    }
 }

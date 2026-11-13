@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +46,12 @@ public class Blind75Controller {
         UUID userId = userDetails.getUser().getId();
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
+    }
+
+    @DeleteMapping("/{id}/progress")
+    public ResponseEntity<ApiResponse> resetProgress(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        UUID userId = userDetails.getUser().getId();
+        blind75Service.resetUserProgress(id, userId);
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_RESET).success(true).build());
     }
 }
