@@ -17,11 +17,24 @@ import java.util.Collections;
 public class ApiResponse {
 
     private int code;
-    private boolean success;
+    private boolean successful;
     private String message;
     private Object data;
 
     public static class ApiResponseBuilder {
+        private boolean successful;
+
+        public ApiResponseBuilder successful(boolean successful) {
+            this.successful = successful;
+            return this;
+        }
+
+        @Deprecated
+        public ApiResponseBuilder success(boolean success) {
+            // For backward-compatibility during refactor, but to be removed
+            this.successful = success;
+            return this;
+        }
 
         public ApiResponse build() {
             if (this.message == null) {
@@ -30,7 +43,7 @@ public class ApiResponse {
             if (this.data == null) {
                 this.data = Collections.emptyMap();
             }
-            return new ApiResponse(this.code, this.success, this.message, this.data);
+            return new ApiResponse(this.code, this.successful, this.message, this.data);
         }
     }
 }
