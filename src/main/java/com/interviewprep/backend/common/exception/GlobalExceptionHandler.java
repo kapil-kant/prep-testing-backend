@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ApiResponse> handleAppException(AppException ex) {
         log.warn("AppException: {}", ex.getMessage());
-        return new ResponseEntity<>(ApiResponse.builder().code(ex.getErrorCode()).success(false).build(), ex.getHttpStatus());
+        return new ResponseEntity<>(ApiResponse.builder().code(ex.getErrorCode()).successful(false).build(), ex.getHttpStatus());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -30,38 +30,38 @@ public class GlobalExceptionHandler {
                 .findFirst()
                 .map(FieldError::getDefaultMessage)
                 .orElse(null);
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.VALIDATION_FAILED).success(false).message(message).build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.VALIDATION_FAILED).successful(false).message(message).build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiResponse> handleBadCredentialsException(BadCredentialsException ex) {
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_CREDENTIALS).success(false).build(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_CREDENTIALS).successful(false).build(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException ex) {
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.ACCESS_DENIED).success(false).build(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.ACCESS_DENIED).successful(false).build(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_ARGUMENT).success(false).build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_ARGUMENT).successful(false).build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         log.warn("HttpMessageNotReadableException: {}", ex.getMessage());
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_ARGUMENT).success(false).build(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INVALID_ARGUMENT).successful(false).build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ApiResponse> handleNoResourceFoundException(NoResourceFoundException ex) {
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.RESOURCE_NOT_FOUND).success(false).build(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.RESOURCE_NOT_FOUND).successful(false).build(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGenericException(Exception ex) {
         log.error("Unhandled exception: {}", ex.getMessage(), ex);
-        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INTERNAL_SERVER_ERROR).success(false).build(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ApiResponse.builder().code(Constants.INTERNAL_SERVER_ERROR).successful(false).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

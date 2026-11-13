@@ -29,7 +29,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         int errorCode = resolveErrorCode(jwtError);
         ApiResponse apiResponse = ApiResponse.builder()
                 .code(errorCode)
-                .success(false)
+                .successful(false)
                 .build();
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
