@@ -11,7 +11,7 @@ public interface Blind75Service {
 
     List<Blind75Response> getAllQuestions(UUID userId);
 
-    List<ProgressStatus> getAllStatuses();
+    List<ProgressStatus> getStatuses();
 
     void updateProgress(UUID questionId, UUID userId, ProgressRequest request);
 }
