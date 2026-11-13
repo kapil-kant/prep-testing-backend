@@ -14,4 +14,6 @@ public interface Blind75Service {
     List<ProgressStatus> getStatuses();
 
     void updateProgress(UUID questionId, UUID userId, ProgressRequest request);
+
+    void resetUserProgress(UUID questionId, UUID userId);
 }

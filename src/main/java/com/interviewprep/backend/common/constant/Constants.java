@@ -16,6 +16,7 @@ public final class Constants {
     public static final int QUESTIONS_FETCHED = 2007;
     public static final int STATUSES_FETCHED = 2008;
     public static final int PROGRESS_UPDATED = 2009;
+    public static final int PROGRESS_RESET = 2010;
 
     // Failure codes (4xxx)
     public static final int INVALID_CREDENTIALS = 4000;
@@ -45,6 +46,7 @@ public final class Constants {
             Map.entry(QUESTIONS_FETCHED, "Questions fetched"),
             Map.entry(STATUSES_FETCHED, "Statuses fetched"),
             Map.entry(PROGRESS_UPDATED, "Progress updated"),
+            Map.entry(PROGRESS_RESET, "Progress reset"),
 
 
             //failure responses

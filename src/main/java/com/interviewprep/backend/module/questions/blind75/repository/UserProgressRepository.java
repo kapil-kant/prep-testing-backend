@@ -11,5 +11,7 @@ public interface UserProgressRepository extends JpaRepository<UserQuestionProgre
 
     Optional<UserQuestionProgress> findByUserIdAndQuestionId(UUID userId, UUID questionId);
 
+    void deleteByUserIdAndQuestionId(UUID userId, UUID questionId);
+
     List<UserQuestionProgress> findByUserId(UUID userId);
 }
