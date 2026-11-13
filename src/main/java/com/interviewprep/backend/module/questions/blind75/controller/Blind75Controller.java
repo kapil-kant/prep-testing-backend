@@ -31,19 +31,19 @@ public class Blind75Controller {
     public ResponseEntity<ApiResponse> getAllQuestions(@AuthenticationPrincipal CustomUserDetails userDetails) {
         UUID userId = userDetails.getUser().getId();
         List<?> questions = blind75Service.getAllQuestions(userId);
-        return ResponseEntity.ok(ApiResponse.builder().code(Constants.QUESTIONS_FETCHED).success(true).data(questions).build());
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.QUESTIONS_FETCHED).successful(true).data(questions).build());
     }
 
     @GetMapping("/statuses")
     public ResponseEntity<ApiResponse> getStatuses() {
         List<ProgressStatus> statuses = blind75Service.getStatuses();
-        return ResponseEntity.ok(ApiResponse.builder().code(Constants.STATUSES_FETCHED).success(true).data(statuses).build());
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.STATUSES_FETCHED).successful(true).data(statuses).build());
     }
 
     @PostMapping("/{id}/progress")
     public ResponseEntity<ApiResponse> updateProgress(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails, @Valid @RequestBody ProgressRequest request) {
         UUID userId = userDetails.getUser().getId();
         blind75Service.updateProgress(id, userId, request);
-        return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).successful(true).build());
     }
 }

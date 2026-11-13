@@ -25,12 +25,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest request) {
         authService.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.builder().code(Constants.USER_REGISTERED).success(true).build());
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.builder().code(Constants.USER_REGISTERED).successful(true).build());
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse loginResponse = authService.login(request);
-        return ResponseEntity.ok(ApiResponse.builder().code(Constants.LOGIN_SUCCESS).success(true).data(loginResponse).build());
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.LOGIN_SUCCESS).successful(true).data(loginResponse).build());
     }
 }
