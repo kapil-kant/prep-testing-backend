@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,5 +46,25 @@ public class Blind75Controller {
         UUID userId = userDetails.getUser().getId();
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
+    }
+
+    @GetMapping("/utf8-size")
+    public ResponseEntity<ApiResponse> getUtf8Size(@RequestParam String text) {
+        int size;
+        try {
+            size = text.getBytes("UTF-8").length;
+        } catch (java.io.UnsupportedEncodingException e) {
+            // Should not happen for UTF-8
+            return ResponseEntity.internalServerError().body(ApiResponse.builder()
+                .code(Constants.INTERNAL_SERVER_ERROR)
+                .success(false)
+                .message("UTF-8 encoding not supported")
+                .build());
+        }
+        return ResponseEntity.ok(ApiResponse.builder()
+            .code(Constants.QUESTIONS_FETCHED)
+            .success(true)
+            .data(size)
+            .build());
     }
 }
