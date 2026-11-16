@@ -5,6 +5,7 @@ import com.interviewprep.backend.common.response.ApiResponse;
 import com.interviewprep.backend.common.security.CustomUserDetails;
 import com.interviewprep.backend.module.questions.blind75.dto.request.ProgressRequest;
 import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
+import com.interviewprep.backend.module.questions.blind75.enums.Difficulty;
 import com.interviewprep.backend.module.questions.blind75.service.Blind75Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,16 @@ public class Blind75Controller {
         UUID userId = userDetails.getUser().getId();
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
+    }
+
+    @GetMapping("/difficulties")
+    public ResponseEntity<ApiResponse> getDifficulties(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        // Authentication is required by @AuthenticationPrincipal
+        Difficulty[] difficulties = Difficulty.values();
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(Constants.QUESTIONS_FETCHED)
+                .success(true)
+                .data(difficulties)
+                .build());
     }
 }
