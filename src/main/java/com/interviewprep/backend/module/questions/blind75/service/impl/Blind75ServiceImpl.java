@@ -101,7 +101,7 @@ public class Blind75ServiceImpl implements Blind75Service {
     }
 
     @Override
-    public Blind75ProgressSummaryResponse getProgressSummary(UUID userId) {
+    public com.interviewprep.backend.module.questions.blind75.dto.response.Blind75ProgressSummaryResponse getProgressSummary(UUID userId) {
         int total = blind75Repository.countAll();
         int solved = userProgressRepository.countByUserIdAndStatus(userId, com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus.SOLVED);
         int left = total - solved;
