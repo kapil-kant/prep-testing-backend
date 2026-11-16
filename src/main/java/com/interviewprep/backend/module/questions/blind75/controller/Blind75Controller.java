@@ -5,6 +5,7 @@ import com.interviewprep.backend.common.response.ApiResponse;
 import com.interviewprep.backend.common.security.CustomUserDetails;
 import com.interviewprep.backend.module.questions.blind75.dto.request.ProgressRequest;
 import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
+import com.interviewprep.backend.module.questions.blind75.enums.VideoAvailability;
 import com.interviewprep.backend.module.questions.blind75.service.Blind75Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,19 @@ public class Blind75Controller {
         UUID userId = userDetails.getUser().getId();
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
+    }
+
+    @GetMapping("/video-availability-options")
+    public ResponseEntity<ApiResponse> getVideoAvailabilityOptions(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        // Require authentication automatically via method argument (Spring Security)
+        List<VideoAvailability> options = blind75Service.getVideoAvailabilityOptions();
+        List<Object> formattedOptions = options.stream()
+                .map(option -> java.util.Map.of("name", option.name(), "label", option.getLabel()))
+                .toList();
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(Constants.VIDEO_AVAILABILITY_OPTIONS_FETCHED)
+                .success(true)
+                .data(formattedOptions)
+                .build());
     }
 }

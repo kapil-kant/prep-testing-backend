@@ -8,6 +8,7 @@ import com.interviewprep.backend.module.questions.blind75.dto.response.Blind75Re
 import com.interviewprep.backend.module.questions.blind75.entity.Blind75Question;
 import com.interviewprep.backend.module.questions.blind75.entity.UserQuestionProgress;
 import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
+import com.interviewprep.backend.module.questions.blind75.enums.VideoAvailability;
 import com.interviewprep.backend.module.questions.blind75.exception.ProgressUpdateFailedException;
 import com.interviewprep.backend.module.questions.blind75.exception.QuestionNotFoundException;
 import com.interviewprep.backend.module.questions.blind75.exception.QuestionsFetchFailedException;
@@ -69,6 +70,11 @@ public class Blind75ServiceImpl implements Blind75Service {
     @Override
     public List<ProgressStatus> getStatuses() {
         return List.of(ProgressStatus.SOLVED, ProgressStatus.ATTEMPTED, ProgressStatus.TODO);
+    }
+
+    @Override
+    public List<VideoAvailability> getVideoAvailabilityOptions() {
+        return List.of(VideoAvailability.values());
     }
 
     @Override
