@@ -46,4 +46,10 @@ public class Blind75Controller {
         blind75Service.updateProgress(id, userId, request);
         return ResponseEntity.ok(ApiResponse.builder().code(Constants.PROGRESS_UPDATED).success(true).build());
     }
+
+    @GetMapping("/difficulties")
+    public ResponseEntity<ApiResponse> getDifficulties() {
+        var difficulties = blind75Service.getDifficulties();
+        return ResponseEntity.ok(ApiResponse.builder().code(Constants.DIFFICULTIES_FETCHED).success(true).data(difficulties).build());
+    }
 }
