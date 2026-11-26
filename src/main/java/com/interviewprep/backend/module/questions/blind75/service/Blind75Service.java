@@ -13,5 +13,10 @@ public interface Blind75Service {
 
     List<ProgressStatus> getStatuses();
 
+    /**
+     * Returns a list of all difficulty levels supported by the app.
+     */
+    List<DifficultyLevelResponse> getDifficultyLevels();
+
     void updateProgress(UUID questionId, UUID userId, ProgressRequest request);
 }
