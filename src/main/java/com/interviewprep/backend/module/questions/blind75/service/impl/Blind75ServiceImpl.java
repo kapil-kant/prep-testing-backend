@@ -72,6 +72,11 @@ public class Blind75ServiceImpl implements Blind75Service {
     }
 
     @Override
+    public List<com.interviewprep.backend.module.questions.blind75.enums.Difficulty.DifficultyLevelDto> getDifficulties() {
+        return com.interviewprep.backend.module.questions.blind75.enums.Difficulty.getAllDifficulties();
+    }
+
+    @Override
     public void updateProgress(UUID questionId, UUID userId, ProgressRequest request) {
         try {
             Blind75Question question = blind75Repository.findById(questionId).orElseThrow(QuestionNotFoundException::new);
