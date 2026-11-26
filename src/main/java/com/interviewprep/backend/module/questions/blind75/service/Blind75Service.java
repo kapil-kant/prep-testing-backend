@@ -13,5 +13,7 @@ public interface Blind75Service {
 
     List<ProgressStatus> getStatuses();
 
+    List<com.interviewprep.backend.module.questions.blind75.enums.Difficulty.DifficultyLevelDto> getDifficulties();
+
     void updateProgress(UUID questionId, UUID userId, ProgressRequest request);
 }
