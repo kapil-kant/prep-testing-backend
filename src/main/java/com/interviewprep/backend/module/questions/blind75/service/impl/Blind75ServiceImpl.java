@@ -5,8 +5,10 @@ import com.interviewprep.backend.module.auth.entity.User;
 import com.interviewprep.backend.module.auth.repository.UserRepository;
 import com.interviewprep.backend.module.questions.blind75.dto.request.ProgressRequest;
 import com.interviewprep.backend.module.questions.blind75.dto.response.Blind75Response;
+import com.interviewprep.backend.module.questions.blind75.dto.response.DifficultyLevelResponse;
 import com.interviewprep.backend.module.questions.blind75.entity.Blind75Question;
 import com.interviewprep.backend.module.questions.blind75.entity.UserQuestionProgress;
+import com.interviewprep.backend.module.questions.blind75.enums.Difficulty;
 import com.interviewprep.backend.module.questions.blind75.enums.ProgressStatus;
 import com.interviewprep.backend.module.questions.blind75.exception.ProgressUpdateFailedException;
 import com.interviewprep.backend.module.questions.blind75.exception.QuestionNotFoundException;
@@ -69,6 +71,13 @@ public class Blind75ServiceImpl implements Blind75Service {
     @Override
     public List<ProgressStatus> getStatuses() {
         return List.of(ProgressStatus.SOLVED, ProgressStatus.ATTEMPTED, ProgressStatus.TODO);
+    }
+
+    @Override
+    public List<DifficultyLevelResponse> getDifficultyLevels() {
+        return java.util.Arrays.stream(Difficulty.values())
+                .map(difficulty -> new DifficultyLevelResponse(difficulty.name(), difficulty.getDisplayName()))
+                .toList();
     }
 
     @Override
